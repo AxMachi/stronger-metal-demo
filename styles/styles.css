@@ -1,0 +1,477 @@
+/* ==========================================================
+   STRONGER _METAL — hoja de estilos compartida (demo)
+   Concepto: cartel de peligro oxidado, post-apocalíptico.
+   Chapa naranja desgastada, bandas negras y amarillas,
+   rotulación stencil, tornillos y un único rojo biológico.
+   Se usa en TODAS las páginas (inicio, trasfondo, multimedia...)
+   Estructura: header > div > button > a | main | footer
+   ========================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Saira+Stencil+One&family=Special+Elite&display=swap");
+
+/* ---------- Variables ---------- */
+:root {
+  --fondo: #323a43;          /* gris azulado, como el borde de la imagen */
+  --placa: #d9a23e;          /* chapa naranja oxidada */
+  --amarillo: #e0a93a;       /* amarillo de peligro */
+  --tinta: #161412;          /* negro de rotulación */
+  --tinta-suave: #4a3a1f;
+  --rojo: #8c1a12;           /* rojo del símbolo biológico (texto) */
+  --negro-pie: #0f0f0e;
+  --gris-pie: #a8a69e;
+
+  --fuente-titulos: "Saira Stencil One", Impact, "Arial Black", sans-serif;
+  --fuente-texto: "Special Elite", "Courier New", Courier, monospace;
+
+  /* Bandas de peligro diagonales */
+  --peligro: repeating-linear-gradient(
+    -45deg,
+    #141311 0 14px,
+    #e0a93a 14px 28px
+  );
+
+  /* Grano / suciedad (ruido SVG, sin imágenes externas) */
+  --grano-oscuro: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --grano-claro: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--fuente-texto);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--tinta);
+  background: var(--grano-claro), var(--fondo);
+}
+
+::selection {
+  background: var(--tinta);
+  color: var(--amarillo);
+}
+
+a {
+  color: var(--rojo);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  background: var(--tinta);
+  color: var(--amarillo);
+}
+
+:focus-visible {
+  outline: 3px solid var(--rojo);
+  outline-offset: 3px;
+}
+
+/* ---------- Cabecera: chapas con rótulo ---------- */
+header {
+  padding: 1.2rem 1rem 1.4rem;
+  background: var(--negro-pie);
+  /* Banda de peligro en el borde inferior */
+  border-style: solid;
+  border-width: 0 0 14px;
+  border-image: var(--peligro) 0 0 14 0;
+}
+
+header div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem 1.1rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* El <button> es la chapa y el <a> ocupa toda su superficie */
+header button {
+  padding: 0;
+  border: 2px solid var(--tinta);
+  border-radius: 0;
+  cursor: pointer;
+  background: var(--grano-oscuro), var(--placa);
+  box-shadow: 4px 4px 0 #000;
+  transform: rotate(-1deg);
+}
+
+header button:nth-child(even) {
+  transform: rotate(0.8deg);
+}
+
+header button:nth-child(3n) {
+  transform: rotate(-0.3deg);
+}
+
+header button a {
+  display: block;
+  padding: 0.5rem 1.2rem;
+  font-family: var(--fuente-titulos);
+  font-size: 1.25rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: var(--tinta);
+}
+
+header button:hover {
+  background: var(--tinta);
+}
+
+header button:hover a {
+  background: transparent;
+  color: var(--amarillo);
+}
+
+header button:active {
+  box-shadow: 0 0 0 #000;
+  translate: 4px 4px;
+}
+
+/* ---------- Contenido: cartel oxidado ---------- */
+:is(main, body > div) {
+  flex: 1;
+  width: calc(100% - 2rem);
+  max-width: 800px;
+  margin: 2.5rem auto 3rem;
+  padding: 2rem 1.8rem 2.5rem;
+  /* Marco de bandas de peligro */
+  border: 16px solid;
+  border-image: var(--peligro) 16;
+  /* Chapa con cuatro tornillos y grano */
+  background:
+    radial-gradient(circle at 14px 14px, #6d6d6d 0 2.5px, #141311 3.5px 4.5px, transparent 5px),
+    radial-gradient(circle at calc(100% - 14px) 14px, #6d6d6d 0 2.5px, #141311 3.5px 4.5px, transparent 5px),
+    radial-gradient(circle at 14px calc(100% - 14px), #6d6d6d 0 2.5px, #141311 3.5px 4.5px, transparent 5px),
+    radial-gradient(circle at calc(100% - 14px) calc(100% - 14px), #6d6d6d 0 2.5px, #141311 3.5px 4.5px, transparent 5px),
+    var(--grano-oscuro),
+    var(--placa);
+  /* Bordes quemados de la chapa + sombra dura */
+  box-shadow:
+    inset 0 0 55px rgba(95, 50, 10, 0.6),
+    9px 9px 0 #0a0a09;
+}
+
+/* Imagen del título */
+:is(main, body > div) img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 0 2.2rem;
+  border: 3px solid var(--tinta);
+  background: var(--tinta);
+}
+
+/* Por si usas un <h1> de texto */
+:is(main, body > div) h1 {
+  margin: 0 0 2rem;
+  font-family: var(--fuente-titulos);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 9vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Subtítulos: rótulo negro con letra stencil amarilla */
+:is(main, body > div) h2 {
+  display: inline-block;
+  margin: 0 0 1.1rem;
+  padding: 0.2rem 0.9rem;
+  font-family: var(--fuente-titulos);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  color: var(--amarillo);
+  background: var(--tinta);
+  transform: rotate(-0.8deg);
+}
+
+/* Subtítulos de segundo nivel */
+:is(main, body > div) h3 {
+  margin: 1.8rem 0 0.8rem;
+  padding-bottom: 0.2rem;
+  font-family: var(--fuente-titulos);
+  font-weight: 400;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  border-bottom: 3px solid var(--tinta);
+}
+
+:is(main, body > div) p {
+  margin: 0 0 1.6rem;
+  max-width: 62ch;
+}
+
+/* Marcador de "texto pendiente" */
+:is(main, body > div) s {
+  display: block;
+  padding: 1rem 1.1rem;
+  text-decoration: none;
+  color: var(--tinta-suave);
+  border: 2px dashed var(--tinta);
+}
+
+/* ---------- Elementos para Trasfondo y Multimedia ---------- */
+
+/* Vídeos incrustados (YouTube) y vídeo propio */
+:is(main, body > div) iframe,
+:is(main, body > div) video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 1.8rem;
+  border: 4px solid var(--tinta);
+  background: #000;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.55);
+}
+
+/* Imágenes con pie de foto */
+:is(main, body > div) figure {
+  margin: 0 0 2rem;
+}
+
+:is(main, body > div) figure img {
+  margin-bottom: 0;
+}
+
+:is(main, body > div) figcaption {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.9rem;
+  color: var(--amarillo);
+  background: var(--tinta);
+}
+
+/* Listas */
+:is(main, body > div) ul,
+:is(main, body > div) ol {
+  margin: 0 0 1.6rem;
+  padding-left: 1.5rem;
+  max-width: 62ch;
+}
+
+:is(main, body > div) li {
+  margin-bottom: 0.4rem;
+}
+
+:is(main, body > div) li::marker {
+  color: var(--rojo);
+}
+
+/* Citas (útil para el trasfondo) */
+:is(main, body > div) blockquote {
+  margin: 0 0 1.6rem;
+  padding: 0.4rem 1.2rem;
+  border-left: 8px solid var(--rojo);
+  background: rgba(22, 20, 18, 0.1);
+  font-style: italic;
+}
+
+/* Separador con bandas de peligro */
+:is(main, body > div) hr {
+  height: 10px;
+  margin: 2.2rem 0;
+  border: 0;
+  background: var(--peligro);
+}
+
+/* Tablas */
+:is(main, body > div) table {
+  width: 100%;
+  margin: 0 0 1.8rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+:is(main, body > div) th {
+  padding: 0.5rem 0.7rem;
+  font-family: var(--fuente-titulos);
+  font-weight: 400;
+  text-align: left;
+  color: var(--amarillo);
+  background: var(--tinta);
+}
+
+:is(main, body > div) td {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--tinta);
+}
+
+/* ---------- Pie de página ---------- */
+footer {
+  margin-top: auto;
+  padding: 2.2rem 1.25rem 1.2rem;
+  color: var(--gris-pie);
+  background: var(--negro-pie);
+  border-style: solid;
+  border-width: 14px 0 0;
+  border-image: var(--peligro) 14 0 0 0;
+}
+
+.footer__contenido {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.footer__bloque h2 {
+  margin: 0 0 0.6rem;
+  font-family: var(--fuente-titulos);
+  font-weight: 400;
+  font-size: 1.4rem;
+  letter-spacing: 0.06em;
+  color: var(--amarillo);
+}
+
+.footer__bloque p {
+  margin: 0;
+}
+
+.footer__bloque ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer__bloque li {
+  margin-bottom: 0.3rem;
+}
+
+.footer__bloque address {
+  font-style: normal;
+}
+
+footer a {
+  color: var(--amarillo);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+footer a:hover {
+  background: var(--amarillo);
+  color: var(--tinta);
+}
+
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.4rem 1.2rem;
+  max-width: 960px;
+  margin: 2rem auto 0;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  border-top: 1px solid #44423e;
+}
+
+.footer__legal p {
+  margin: 0;
+}
+
+/* ---------- Botón dentro del contenido (p. ej. "Descarga") ---------- */
+:is(main, body > div) button {
+  display: block;
+  margin: 2rem auto 0;
+  padding: 0;
+  border: 2px solid var(--tinta);
+  border-radius: 0;
+  cursor: pointer;
+  background: var(--tinta);
+  box-shadow: 5px 5px 0 #000;
+  transform: rotate(-1deg);
+}
+
+:is(main, body > div) button a {
+  display: block;
+  padding: 0.7rem 2.4rem;
+  font-family: var(--fuente-titulos);
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: var(--amarillo);
+}
+
+:is(main, body > div) button:hover {
+  background: var(--amarillo);
+}
+
+:is(main, body > div) button:hover a {
+  background: transparent;
+  color: var(--tinta);
+}
+
+:is(main, body > div) button:active {
+  box-shadow: 0 0 0 #000;
+  translate: 5px 5px;
+}
+
+/* ---------- Descripción justo debajo de un <h1> (página de fichas) ---------- */
+:is(main, body > div) h1 + h3 {
+  margin: -0.8rem 0 1.8rem;
+  padding: 0;
+  font-family: var(--fuente-texto);
+  font-size: 1.05rem;
+  letter-spacing: 0;
+  text-align: center;
+  border: 0;
+}
+
+/* ---------- Página Multimedia (#cont: vídeo + <legend>) ---------- */
+#cont > div {
+  margin-bottom: 2.2rem;
+}
+
+#cont > div:last-child {
+  margin-bottom: 0;
+}
+
+/* El vídeo y su pie forman un bloque pegado */
+#cont iframe {
+  margin-bottom: 0;
+}
+
+legend {
+  display: block;
+  width: 100%;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--amarillo);
+  background: var(--tinta);
+}
+
+/* ---------- Móvil ---------- */
+@media (max-width: 520px) {
+  header button {
+    flex: 1 1 40%;
+  }
+
+  header button a {
+    padding: 0.55rem 0.5rem;
+    text-align: center;
+  }
+
+  :is(main, body > div) {
+    margin-top: 1.5rem;
+    padding: 1.2rem 1rem 2rem;
+    border-width: 10px;
+    border-image-slice: 10;
+    box-shadow:
+      inset 0 0 40px rgba(95, 50, 10, 0.6),
+      5px 5px 0 #0a0a09;
+  }
+}
